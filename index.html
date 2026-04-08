@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Parker Hanna</title>
+    <title>Portfolio - Matthew Brady</title>
     <style>
         * {
             margin: 0;
@@ -284,11 +284,20 @@
 <body>
     <div id="vanta-bg"></div>
 
+
+
+
     <header>
         <div class="links">
-            <a href="#" target="_blank" rel="noopener noreferrer">GitHub Placeholder</a>
-            <a href="https://www.linkedin.com/in/matthew-brady-270712345" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="#">Resume Placeholder</a>
+            <a href="https://github.com/matthewbrady2214/Matthew-Brady" target="_blank">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="20">
+                GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/matthew-brady-270712345" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20">
+                LinkedIn
+            </a>
+            <a href="Matthew_Brady_Resume.pdf" download="Matthew_Brady_Resume.pdf">Resume</a>
         </div>
         <nav>
             <a href="#home">Home</a>
@@ -299,10 +308,11 @@
             <a href="#model-showcase">3D Showcase</a>
             <a href="#contact">Contact</a>
         </nav>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
     </header>
 
     <div id="home" class="intro">
-        <h1>Hello, I'm <span style="color:#00308f;">Parker.</span></h1>
+        <h1>Hello, I'm <span style="color:#00308f;">Matthew.</span></h1>
         <p>
             Currently pursuing a Bachelor's Degree in Mechanical Engineering.
         </p>
@@ -311,10 +321,10 @@
 
     <div id="about" class="about-skills">
         <div class="about">
-            <img src="images/aiden_picture.jpg" alt="Personal Image" class="about-image">
+            <img src="images/Matthew.jpg" alt="Personal Image" class="about-image">
             <h2>About Me</h2>
             <p>
-                Hello! I'm Parker Hanna, a Mechanical Engineering student at Oregon State University with hands-on experience in industry-standard tools like SolidWorks, AutoCAD, and Python. I specialize in transforming complex engineering challenges into innovative solutions through analytical thinking, precise modeling, and data-driven design. Passionate about applying technical expertise to real-world problems, I'm dedicated to pushing the boundaries of what's possible in engineering.
+                Hello! I'm Matthew Brady, a Mechanical Engineering student at Oregon State University with hands-on industry experience as a Transmission Line Engineer Intern at WSP. My work includes revising transmission line designs using PLS-CADD, designing concrete foundations for steel poles, and managing project documentation with tools like Bluebeam Revu and ProjectWise. I excel at applying technical knowledge and analytical skills to deliver practical engineering solutions, and I'm passionate about leveraging advanced modeling and design tools to solve real-world challenges.
             </p>
         </div>
         <div class="skills">
@@ -359,9 +369,40 @@
 
     <section id="experience" class="section-card">
         <h2>Experience</h2>
-        <div class="placeholder-list">
-            <div class="placeholder-item">Experience Placeholder 1</div>
-            <div class="placeholder-item">Experience Placeholder 2</div>
+        <div class="experience-list" style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <div class="experience-item" style="width: 100%; display: flex; flex-direction: column; gap: 0.7rem;">
+                <h3 style="font-size: 2rem; color: #fff; margin-bottom: 0.2rem; text-align: left;">Transmission Line Engineer</h3>
+                <p style="margin-bottom: 0.2rem;"><strong>WSP</strong> - Internship</p>
+                <p style="margin-bottom: 0.2rem;" id="wsp-dates"></p>
+                <script>
+                    function updateWspDates() {
+                        const start = new Date(2025, 5); // June 2025 (0-based month)
+                        const now = new Date();
+                        const months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+                        let duration = "";
+                        if (months < 1) {
+                            duration = "Less than 1 mo";
+                        } else if (months < 12) {
+                            duration = months + (months === 1 ? " mo" : " mos");
+                        } else {
+                            const years = Math.floor(months / 12);
+                            const rem = months % 12;
+                            duration = years + (years === 1 ? " yr" : " yrs");
+                            if (rem > 0) duration += " " + rem + (rem === 1 ? " mo" : " mos");
+                        }
+                        document.getElementById("wsp-dates").textContent = `Jun 2025 - Present · ${duration}`;
+                    }
+                    updateWspDates();
+                    setInterval(updateWspDates, 1000 * 60 * 60 * 6); // update every 6 hours
+                </script>
+                <p style="margin-bottom: 0.2rem;">Portland, Oregon, United States · On-site</p>
+                <ul style="color: #ddd; margin-left: 1.2rem; line-height: 1.7;">
+                    <li>Revised new and existing transmission line designs using PLS-CADD</li>
+                    <li>Designed direct-embed and drilled pier concrete foundations for steel poles up to 130 ft</li>
+                    <li>Created markups and managed revisions using Bluebeam Revu</li>
+                    <li>Tracked and maintained document versions using ProjectWise</li>
+                </ul>
+            </div>
         </div>
     </section>
 
@@ -376,9 +417,21 @@
 
     <section id="education" class="section-card">
         <h2>Education</h2>
-        <div class="placeholder-list">
-            <div class="placeholder-item">Education Placeholder 1</div>
-            <div class="placeholder-item">Education Placeholder 2</div>
+        <div class="education-list" style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <div class="education-item" style="width: 100%; display: flex; flex-direction: column; gap: 0.7rem;">
+                <h3 style="font-size: 2rem; color: #fff; margin-bottom: 0.2rem; text-align: left;">Oregon State University</h3>
+                <p style="margin-bottom: 0.2rem;">September 2022 - June 2026</p>
+                <p style="margin-bottom: 0.2rem;">
+                    <strong>Degree:</strong> B.S Mechanical Engineering - Product Design and Manufacturing
+                </p>
+            </div>
+            <img src="images/mog.png" alt="o" class="education-image" style="max-width: 220px; width: 100%; border-radius: 10px; display: block; margin: 0 auto;">
+        </div>
+    </section>
+        </div>
+    </section>
+        </div>
+    </section>
         </div>
     </section>
 
@@ -415,12 +468,21 @@
                     style="width: 100%; padding: 0.8rem; border: 1px solid #00308f; background: transparent; color: white; border-radius: 6px;">
                 <textarea id="message" name="message" placeholder="Message" rows="5" required
                     style="width: 100%; padding: 0.8rem; border: 1px solid #00308f; background: transparent; color: white; border-radius: 6px; resize: vertical;"></textarea>
-                <button type="submit" class="resume-button" style="width: fit-content; cursor: pointer;">SUBMIT</button>
+                <button type="submit" class="resume-button submit-btn" style="width: fit-content; cursor: pointer; background: #00308f; border-color: #00308f;">
+                    <span class="submit-text">SUBMIT</span>
+                </button>
+                <style>
+                    .submit-btn .submit-text {
+                        color: #fff;
+                        transition: color 0.3s;
+                    }
+                    .submit-btn:hover .submit-text {
+                        color: #000000;
+                    }
+                </style>
             </form>
 
             <div style="margin-top: 1.2rem; color: #ddd; display: grid; gap: 0.35rem;">
-                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/matthew-brady-270712345" target="_blank" rel="noopener noreferrer">matthew-brady-270712345</a></p>
-                <p><strong>Phone:</strong> (503) 979-1369</p>
             </div>
         </div>
     </section>
