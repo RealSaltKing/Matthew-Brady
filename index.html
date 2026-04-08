@@ -3,622 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Matthew Brady</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            color: #fff;
-            background: #000;
-            scroll-behavior: smooth;
-        }
-
-        #vanta-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.82);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        header .links,
-        header nav {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        header a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 0.95rem;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        header a:hover {
-            color: #00308f;
-        }
-
-        .intro {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 7rem 1.5rem 3rem;
-        }
-
-        .intro h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 1rem;
-        }
-
-        .intro p {
-            font-size: 1.15rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .resume-button {
-            text-decoration: none;
-            color: #fff;
-            border: 2px solid #fff;
-            padding: 0.7rem 1.3rem;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-
-        .resume-button:hover {
-            background: #00308f;
-            border-color: #00308f;
-        }
-
-        .about-skills {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: 2rem;
-            padding: 4rem 2rem;
-            background: rgba(17, 17, 17, 0.92);
-            margin: 2rem auto;
-            width: min(1100px, 94%);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .about {
-            width: 45%;
-            text-align: center;
-        }
-
-        .about-image {
-            width: 300px;
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1rem;
-            border-radius: 10px;
-        }
-
-        .about h2 {
-            font-size: 2rem;
-            color: #00308f;
-            margin-bottom: 1rem;
-        }
-
-        .about p {
-            color: #ddd;
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        .skills {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 0.6rem;
-            width: 45%;
-            margin: 0 auto;
-            justify-items: center;
-            align-items: center;
-        }
-
-        .skill {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100px;
-            height: 100px;
-            border: 2px solid #00308f;
-            border-radius: 10px;
-            background: transparent;
-            transition: transform 0.3s ease;
-        }
-
-        .skill img {
-            width: 80%;
-            height: auto;
-            max-height: 50px;
-            object-fit: contain;
-        }
-
-        .skill:hover {
-            transform: translateY(-5px);
-        }
-
-        .section-card {
-            background: rgba(17, 17, 17, 0.92);
-            margin: 2rem auto;
-            padding: 3rem 1.5rem;
-            width: min(1100px, 94%);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .section-card h2 {
-            font-size: 2rem;
-            color: #00308f;
-            margin-bottom: 1.2rem;
-        }
-
-        .placeholder-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .placeholder-item {
-            border: 1px solid rgba(0, 48, 143, 0.6);
-            border-radius: 8px;
-            padding: 1rem;
-            color: #ddd;
-        }
-
-        .model-viewer-container {
-            border-radius: 10px;
-            overflow: hidden;
-            background: #0b0b0b;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        #model-container {
-            width: 100%;
-            height: 560px;
-            position: relative;
-            background: #0f0f0f;
-            cursor: grab;
-        }
-
-        #model-container:active {
-            cursor: grabbing;
-        }
-
-        .loading-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.8rem 1rem;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 0.95rem;
-            z-index: 2;
-        }
-
-        .model-controls {
-            display: flex;
-            gap: 0.75rem;
-            padding: 1rem;
-            flex-wrap: wrap;
-            background: #131313;
-        }
-
-        .control-btn {
-            border: 1px solid #00308f;
-            background: transparent;
-            color: #fff;
-            padding: 0.55rem 0.9rem;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .control-btn:hover {
-            background: #00308f;
-        }
-
-        .model-info {
-            padding: 1rem;
-            color: #ddd;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .model-info h3 {
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        @media (max-width: 900px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .about-skills {
-                flex-direction: column;
-            }
-
-            .about,
-            .skills {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            #model-container {
-                height: 360px;
-            }
-        }
-    </style>
+    <meta name="description" content="Matthew Brady portfolio featuring mechanical engineering work, design experience, and a 3D project showcase.">
+    <title>Matthew Brady | Mechanical Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="vanta-bg"></div>
+    <div class="site-shell">
+        <div class="ambient ambient-one"></div>
+        <div class="ambient ambient-two"></div>
+        <div class="grid-overlay"></div>
 
-
-
-
-    <header>
-        <div class="links">
-            <a href="https://github.com/matthewbrady2214/Matthew-Brady" target="_blank">
-                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="20">
-                GitHub
+        <header class="site-header" id="top">
+            <a class="brand" href="#hero" aria-label="Matthew Brady home">
+                <span class="brand-mark">MB</span>
+                <span class="brand-text">
+                    <strong>Matthew Brady</strong>
+                    <small>Mechanical Engineering Portfolio</small>
+                </span>
             </a>
-            <a href="https://www.linkedin.com/in/matthew-brady-270712345" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="20">
-                LinkedIn
-            </a>
-            <a href="Matthew_Brady_Resume.pdf" download="Matthew_Brady_Resume.pdf">Resume</a>
-        </div>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-            <a href="#education">Education</a>
-            <a href="#model-showcase">3D Showcase</a>
-            <a href="#contact">Contact</a>
-        </nav>
-        <div class="menu-icon" onclick="toggleMenu()">☰</div>
-    </header>
 
-    <div id="home" class="intro">
-        <h1>Hello, I'm <span style="color:#00308f;">Matthew.</span></h1>
-        <p>
-            Currently pursuing a Bachelor's Degree in Mechanical Engineering.
-        </p>
-        <a class="resume-button" href="Kayle_Megginson_Resume.pdf" download="Kayle_Megginson_Resume.pdf">Download Resume</a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="site-nav" id="site-nav">
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#showcase">3D Showcase</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <a class="icon-link" href="https://github.com/matthewbrady2214/Matthew-Brady" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="icon-link" href="https://www.linkedin.com/in/matthew-brady-270712345" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="button button-ghost" href="#contact">Contact</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero" id="hero">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow">Built for field work, design systems, and real-world problem solving</p>
+                    <h1>Engineering ideas into structures, systems, and experiences that actually hold up.</h1>
+                    <p class="hero-text">
+                        I’m Matthew Brady, a mechanical engineering student at Oregon State University with hands-on transmission line design experience, CAD fluency, and a growing interest in product design and digital tools.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button" href="#projects">View Projects</a>
+                        <a class="button button-ghost" href="#showcase">Explore 3D Model</a>
+                    </div>
+                    <div class="hero-metrics">
+                        <div class="metric-card">
+                            <span class="metric-value" data-count="130">0</span>
+                            <span class="metric-label">foot poles designed around</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" data-count="3">0</span>
+                            <span class="metric-label">core strengths across design, analysis, and documentation</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" data-count="2026">0</span>
+                            <span class="metric-label">target graduation year at Oregon State</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual reveal">
+                    <div class="hero-panel profile-panel">
+                        <div class="panel-badge">Available for engineering opportunities</div>
+                        <img src="images/Matthew.jpg" alt="Portrait of Matthew Brady" class="profile-shot">
+                        <div class="panel-lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="floating-card card-top">
+                        <span class="tag">WSP Internship</span>
+                        <strong>Transmission Line Engineering</strong>
+                        <p>PLS-CADD updates, concrete foundation design, and revision tracking.</p>
+                    </div>
+
+                    <div class="floating-card card-bottom">
+                        <span class="tag">Focus Area</span>
+                        <strong>Product Design + Manufacturing</strong>
+                        <p>Mechanical systems thinking with practical modeling and documentation skills.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="spotlight reveal">
+                <div class="spotlight-card">
+                    <p class="eyebrow">Current Role</p>
+                    <div class="spotlight-layout">
+                        <div>
+                            <h2>Transmission Line Engineer Intern at WSP</h2>
+                            <p>
+                                Working on utility infrastructure projects with a mix of structural detail, technical drafting,
+                                and document control. The goal is always the same: accurate work, reliable revisions, and solutions
+                                that make sense in the field.
+                            </p>
+                        </div>
+                        <div class="spotlight-pills">
+                            <span>PLS-CADD</span>
+                            <span>Bluebeam Revu</span>
+                            <span>ProjectWise</span>
+                            <span>Foundation Design</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section section-grid" id="about">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">About</p>
+                    <h2>Technical discipline with a design-forward mindset.</h2>
+                </div>
+
+                <article class="glass-card reveal">
+                    <p>
+                        I’m pursuing a B.S. in Mechanical Engineering with a product design and manufacturing emphasis.
+                        My work so far has been shaped by utility design, detailed modeling, and learning how strong engineering
+                        decisions come from both analysis and communication.
+                    </p>
+                    <p>
+                        I enjoy projects where physical constraints matter, where tools need to be precise, and where good design
+                        can reduce friction for the people building, reviewing, or using the final result.
+                    </p>
+                </article>
+
+                <aside class="skills-cloud reveal">
+                    <div class="skill-chip"><img src="images/solidworks.png" alt="SolidWorks logo"><span>SolidWorks</span></div>
+                    <div class="skill-chip"><img src="images/autocad.png" alt="AutoCAD logo"><span>AutoCAD</span></div>
+                    <div class="skill-chip"><img src="images/R_logo.png" alt="R logo"><span>R</span></div>
+                    <div class="skill-chip"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python logo"><span>Python</span></div>
+                    <div class="skill-chip"><img src="images/reactjs_logo.png" alt="React logo"><span>React</span></div>
+                    <div class="skill-chip"><img src="images/Git_logo.png" alt="Git logo"><span>Git</span></div>
+                    <div class="skill-chip"><img src="images/pngwing.com.png" alt="Jira logo"><span>Jira</span></div>
+                    <div class="skill-chip"><img src="images/js.png" alt="JavaScript logo"><span>JavaScript</span></div>
+                    <div class="skill-chip"><img src="images/Confluence_Logo.png" alt="Confluence logo"><span>Confluence</span></div>
+                    <div class="skill-chip"><img src="images/powerpoint.png" alt="PowerPoint logo"><span>PowerPoint</span></div>
+                    <div class="skill-chip"><img src="images/Excel-Logo.png" alt="Excel logo"><span>Excel</span></div>
+                    <div class="skill-chip"><img src="images/azure-logo-white-circle-1.png" alt="Azure logo"><span>Azure</span></div>
+                </aside>
+            </section>
+
+            <section class="timeline-section" id="experience">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Experience</p>
+                    <h2>Engineering work with real project constraints.</h2>
+                </div>
+
+                <div class="timeline-card reveal">
+                    <div class="timeline-topline">
+                        <div>
+                            <h3>Transmission Line Engineer Intern</h3>
+                            <p class="timeline-company">WSP</p>
+                        </div>
+                        <div class="timeline-meta">
+                            <p id="wsp-dates">Jun 2025 - Present</p>
+                            <p>Portland, Oregon · On-site</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-columns">
+                        <ul class="detail-list">
+                            <li>Revised new and existing transmission line designs using PLS-CADD.</li>
+                            <li>Designed direct-embed and drilled pier concrete foundations for steel poles up to 130 feet.</li>
+                            <li>Created markups and managed revisions through Bluebeam Revu.</li>
+                            <li>Tracked project documentation and version control inside ProjectWise.</li>
+                        </ul>
+
+                        <div class="highlight-stack">
+                            <div class="mini-card">
+                                <span class="mini-label">Strength</span>
+                                <strong>Structural detail</strong>
+                            </div>
+                            <div class="mini-card">
+                                <span class="mini-label">Strength</span>
+                                <strong>Documentation rigor</strong>
+                            </div>
+                            <div class="mini-card">
+                                <span class="mini-label">Strength</span>
+                                <strong>Revision management</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="projects-section" id="projects">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Projects</p>
+                    <h2>A few directions that show how I like to build.</h2>
+                </div>
+
+                <div class="project-grid">
+                    <article class="project-card reveal">
+                        <span class="project-index">01</span>
+                        <h3>3D Mechanical Model Study</h3>
+                        <p>
+                            An interactive GLTF showcase for an engineering project, rebuilt here as a cleaner viewer with better framing,
+                            camera controls, and presentation.
+                        </p>
+                        <div class="project-tags">
+                            <span>3D</span>
+                            <span>Visualization</span>
+                            <span>Engineering</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <span class="project-index">02</span>
+                        <h3>Transmission Design Workflow</h3>
+                        <p>
+                            Practical work focused on turning technical requirements into buildable transmission line revisions and
+                            foundation concepts with clear documentation.
+                        </p>
+                        <div class="project-tags">
+                            <span>PLS-CADD</span>
+                            <span>Foundations</span>
+                            <span>QA</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <span class="project-index">03</span>
+                        <h3>Digital Tooling Exploration</h3>
+                        <p>
+                            A growing mix of coding, engineering software, and workflow tools that support communication,
+                            analysis, and faster iteration.
+                        </p>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>JavaScript</span>
+                            <span>CAD</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="education-section section-grid">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Education</p>
+                    <h2>Grounded in manufacturing, design, and systems thinking.</h2>
+                </div>
+
+                <div class="education-card reveal">
+                    <div>
+                        <h3>Oregon State University</h3>
+                        <p>September 2022 - June 2026</p>
+                        <p><strong>Degree:</strong> B.S. Mechanical Engineering, Product Design and Manufacturing</p>
+                    </div>
+                    <img src="images/mog.png" alt="Oregon State University graphic">
+                </div>
+            </section>
+
+            <section class="showcase-section" id="showcase">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">3D Showcase</p>
+                    <h2>Interactive model viewer for the EGR 248 midterm project.</h2>
+                </div>
+
+                <div class="showcase-shell reveal">
+                    <div class="showcase-copy">
+                        <p>
+                            Drag to rotate, scroll to zoom, and use the controls to inspect the scene. The viewer has been updated
+                            to frame the model more cleanly and feel like part of the portfolio instead of a separate widget.
+                        </p>
+                        <div class="showcase-actions">
+                            <button id="reset-view" class="button button-small" type="button">Reset View</button>
+                            <button id="toggle-grid" class="button button-ghost button-small" type="button">Toggle Grid</button>
+                            <button id="toggle-axes" class="button button-ghost button-small" type="button">Toggle Axes</button>
+                        </div>
+                        <p class="viewer-status" id="model-status">Status: Initializing viewer...</p>
+                    </div>
+
+                    <div class="viewer-frame">
+                        <div id="model-container">
+                            <div id="loading-text" class="loading-text">Loading 3D model...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact-section" id="contact">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Contact</p>
+                    <h2>Let’s talk about engineering, design, or the next thing to build.</h2>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-copy reveal">
+                        <p>
+                            If you’re looking for someone who enjoys technical depth, polished deliverables, and learning fast on real projects,
+                            I’d love to connect.
+                        </p>
+                        <div class="contact-links">
+                            <a href="https://www.linkedin.com/in/matthew-brady-270712345" target="_blank" rel="noreferrer">LinkedIn</a>
+                            <a href="https://github.com/matthewbrady2214/Matthew-Brady" target="_blank" rel="noreferrer">GitHub</a>
+                            <a href="#contact">Reach Out</a>
+                        </div>
+                    </div>
+
+                    <form id="contact-form" class="contact-form reveal" action="https://formspree.io/f/xkgjvrla" method="POST">
+                        <label>
+                            <span>Name</span>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        </label>
+                        <label>
+                            <span>Message</span>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell me a bit about what you're working on." required></textarea>
+                        </label>
+                        <button type="submit" class="button submit-btn">Send Message</button>
+                        <p id="form-status" class="form-status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </section>
+        </main>
     </div>
-
-    <div id="about" class="about-skills">
-        <div class="about">
-            <img src="images/Matthew.jpg" alt="Personal Image" class="about-image">
-            <h2>About Me</h2>
-            <p>
-                Hello! I'm Matthew Brady, a Mechanical Engineering student at Oregon State University with hands-on industry experience as a Transmission Line Engineer Intern at WSP. My work includes revising transmission line designs using PLS-CADD, designing concrete foundations for steel poles, and managing project documentation with tools like Bluebeam Revu and ProjectWise. I excel at applying technical knowledge and analytical skills to deliver practical engineering solutions, and I'm passionate about leveraging advanced modeling and design tools to solve real-world challenges.
-            </p>
-        </div>
-        <div class="skills">
-            <div class="skill">
-                <img src="images/solidworks.png" alt="Solid Works Logo">
-            </div>
-            <div class="skill">
-                <img src="images/autocad.png" alt="AutoCAD Logo">
-            </div>
-            <div class="skill">
-                <img src="images/R_logo.png" alt="R Logo">
-            </div>
-            <div class="skill">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python">
-            </div>
-            <div class="skill">
-                <img src="images/reactjs_logo.png" alt="React Logo">
-            </div>
-            <div class="skill">
-                <img src="images/Git_logo.png" alt="Git Logo">
-            </div>
-            <div class="skill">
-                <img src="images/pngwing.com.png" alt="Jira Logo">
-            </div>
-            <div class="skill">
-                <img src="images/js.png" alt="Skill 12">
-            </div>
-            <div class="skill">
-                <img src="images/Confluence_Logo.png" alt="Confluence Logo">
-            </div>
-            <div class="skill">
-                <img src="images/powerpoint.png" alt="PowerPoint Logo">
-            </div>
-            <div class="skill">
-                <img src="images/Excel-Logo.png" alt="Excel Logo">
-            </div>
-            <div class="skill">
-                <img src="images/azure-logo-white-circle-1.png" alt="Skill 11">
-            </div>
-        </div>
-    </div>
-
-    <section id="experience" class="section-card">
-        <h2>Experience</h2>
-        <div class="experience-list" style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
-            <div class="experience-item" style="width: 100%; display: flex; flex-direction: column; gap: 0.7rem;">
-                <h3 style="font-size: 2rem; color: #fff; margin-bottom: 0.2rem; text-align: left;">Transmission Line Engineer</h3>
-                <p style="margin-bottom: 0.2rem;"><strong>WSP</strong> - Internship</p>
-                <p style="margin-bottom: 0.2rem;" id="wsp-dates"></p>
-                <script>
-                    function updateWspDates() {
-                        const start = new Date(2025, 5); // June 2025 (0-based month)
-                        const now = new Date();
-                        const months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
-                        let duration = "";
-                        if (months < 1) {
-                            duration = "Less than 1 mo";
-                        } else if (months < 12) {
-                            duration = months + (months === 1 ? " mo" : " mos");
-                        } else {
-                            const years = Math.floor(months / 12);
-                            const rem = months % 12;
-                            duration = years + (years === 1 ? " yr" : " yrs");
-                            if (rem > 0) duration += " " + rem + (rem === 1 ? " mo" : " mos");
-                        }
-                        document.getElementById("wsp-dates").textContent = `Jun 2025 - Present · ${duration}`;
-                    }
-                    updateWspDates();
-                    setInterval(updateWspDates, 1000 * 60 * 60 * 6); // update every 6 hours
-                </script>
-                <p style="margin-bottom: 0.2rem;">Portland, Oregon, United States · On-site</p>
-                <ul style="color: #ddd; margin-left: 1.2rem; line-height: 1.7;">
-                    <li>Revised new and existing transmission line designs using PLS-CADD</li>
-                    <li>Designed direct-embed and drilled pier concrete foundations for steel poles up to 130 ft</li>
-                    <li>Created markups and managed revisions using Bluebeam Revu</li>
-                    <li>Tracked and maintained document versions using ProjectWise</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="section-card">
-        <h2>Projects</h2>
-        <div class="placeholder-list">
-            <div class="placeholder-item">Project Placeholder 1</div>
-            <div class="placeholder-item">Project Placeholder 2</div>
-            <div class="placeholder-item">Project Placeholder 3</div>
-        </div>
-    </section>
-
-    <section id="education" class="section-card">
-        <h2>Education</h2>
-        <div class="education-list" style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
-            <div class="education-item" style="width: 100%; display: flex; flex-direction: column; gap: 0.7rem;">
-                <h3 style="font-size: 2rem; color: #fff; margin-bottom: 0.2rem; text-align: left;">Oregon State University</h3>
-                <p style="margin-bottom: 0.2rem;">September 2022 - June 2026</p>
-                <p style="margin-bottom: 0.2rem;">
-                    <strong>Degree:</strong> B.S Mechanical Engineering - Product Design and Manufacturing
-                </p>
-            </div>
-            <img src="images/mog.png" alt="o" class="education-image" style="max-width: 220px; width: 100%; border-radius: 10px; display: block; margin: 0 auto;">
-        </div>
-    </section>
-        </div>
-    </section>
-        </div>
-    </section>
-        </div>
-    </section>
-
-    <section id="model-showcase" class="section-card">
-        <h2>3D Model Showcase</h2>
-        <div class="model-viewer-container">
-            <div id="model-container">
-                <div id="loading-text" class="loading-text">Loading 3D model...</div>
-            </div>
-            <div class="model-controls">
-                <button id="reset-view" class="control-btn">Reset View</button>
-                <button id="toggle-grid" class="control-btn">Toggle Grid</button>
-                <button id="toggle-axes" class="control-btn">Toggle Axes</button>
-            </div>
-            <div class="model-info">
-                <h3>EGR 248 Midterm Project</h3>
-                <p>Use mouse drag to rotate, scroll to zoom, and right-click drag to pan.</p>
-                <p id="model-status">Status: Initializing viewer...</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section-card">
-        <h2>Contact</h2>
-        <div style="max-width: 700px; margin: 0 auto;">
-            <p style="margin-bottom: 1rem; color: #ddd;">
-                Have a question or want to work together? Leave your details and I'll get back to you as soon as possible.
-            </p>
-
-            <form id="contact-form" action="https://formspree.io/f/xkgjvrla" method="POST" style="display: grid; gap: 0.8rem;">
-                <input type="text" id="name" name="name" placeholder="Name" required
-                    style="width: 100%; padding: 0.8rem; border: 1px solid #00308f; background: transparent; color: white; border-radius: 6px;">
-                <input type="email" id="email" name="email" placeholder="Email" required
-                    style="width: 100%; padding: 0.8rem; border: 1px solid #00308f; background: transparent; color: white; border-radius: 6px;">
-                <textarea id="message" name="message" placeholder="Message" rows="5" required
-                    style="width: 100%; padding: 0.8rem; border: 1px solid #00308f; background: transparent; color: white; border-radius: 6px; resize: vertical;"></textarea>
-                <button type="submit" class="resume-button submit-btn" style="width: fit-content; cursor: pointer; background: #00308f; border-color: #00308f;">
-                    <span class="submit-text">SUBMIT</span>
-                </button>
-                <style>
-                    .submit-btn .submit-text {
-                        color: #fff;
-                        transition: color 0.3s;
-                    }
-                    .submit-btn:hover .submit-text {
-                        color: #000000;
-                    }
-                </style>
-            </form>
-
-            <div style="margin-top: 1.2rem; color: #ddd; display: grid; gap: 0.35rem;">
-            </div>
-        </div>
-    </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.halo.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
-        VANTA.HALO({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.0,
-            minWidth: 200.0,
-            baseColor: 0x00152e,
-            backgroundColor: 0x000000
-        });
-
-        (function initModelViewer() {
-            const container = document.getElementById("model-container");
-            const loadingText = document.getElementById("loading-text");
-            const status = document.getElementById("model-status");
-
-            const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x0f0f0f);
-
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
-
-            const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 2000);
-            camera.position.set(2.2, 1.4, 2.8);
-
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.08;
-            controls.target.set(0, 0, 0);
-
-            scene.add(new THREE.HemisphereLight(0xffffff, 0x222222, 0.9));
-            const keyLight = new THREE.DirectionalLight(0xffffff, 1.0);
-            keyLight.position.set(4, 6, 3);
-            scene.add(keyLight);
-
-            const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
-            fillLight.position.set(-3, 2, -5);
-            scene.add(fillLight);
-
-            const gridHelper = new THREE.GridHelper(8, 8, 0x3355aa, 0x444444);
-            gridHelper.visible = false;
-            scene.add(gridHelper);
-
-            const axesHelper = new THREE.AxesHelper(1.5);
-            axesHelper.visible = false;
-            scene.add(axesHelper);
-
-            let initialCamPos = camera.position.clone();
-            let initialTarget = controls.target.clone();
-
-            function resizeRenderer() {
-                const width = container.clientWidth;
-                const height = container.clientHeight;
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-                renderer.setSize(width, height);
-            }
-
-            function frameObject(object) {
-                const box = new THREE.Box3().setFromObject(object);
-                const size = box.getSize(new THREE.Vector3());
-                const center = box.getCenter(new THREE.Vector3());
-                object.position.sub(center);
-
-                const maxDim = Math.max(size.x, size.y, size.z);
-                const scale = maxDim > 0 ? 1.8 / maxDim : 1;
-                object.scale.setScalar(scale);
-
-                const framedBox = new THREE.Box3().setFromObject(object);
-                const framedSize = framedBox.getSize(new THREE.Vector3());
-                const distance = Math.max(framedSize.x, framedSize.y, framedSize.z) * 2.2;
-                camera.position.set(distance, distance * 0.65, distance);
-                controls.target.set(0, 0, 0);
-                controls.update();
-
-                initialCamPos = camera.position.clone();
-                initialTarget = controls.target.clone();
-            }
-
-            const loader = new THREE.GLTFLoader();
-            loader.load(
-                "models/EGR%20248%20Midterm.gltf",
-                function (gltf) {
-                    scene.add(gltf.scene);
-                    frameObject(gltf.scene);
-                    loadingText.remove();
-                    status.textContent = "Status: Model loaded successfully.";
-                },
-                function (xhr) {
-                    if (xhr.total) {
-                        const pct = Math.round((xhr.loaded / xhr.total) * 100);
-                        loadingText.textContent = "Loading 3D model... " + pct + "%";
-                        status.textContent = "Status: Loading " + pct + "%";
-                    }
-                },
-                function (error) {
-                    console.error(error);
-                    loadingText.textContent = "Failed to load model.";
-                    status.textContent = "Status: Failed to load models/EGR 248 Midterm.gltf";
-                }
-            );
-
-            document.getElementById("reset-view").addEventListener("click", function () {
-                camera.position.copy(initialCamPos);
-                controls.target.copy(initialTarget);
-                controls.update();
-            });
-
-            document.getElementById("toggle-grid").addEventListener("click", function () {
-                gridHelper.visible = !gridHelper.visible;
-            });
-
-            document.getElementById("toggle-axes").addEventListener("click", function () {
-                axesHelper.visible = !axesHelper.visible;
-            });
-
-            window.addEventListener("resize", resizeRenderer);
-            resizeRenderer();
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
-            animate();
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
